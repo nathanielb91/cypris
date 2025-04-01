@@ -1,0 +1,42 @@
+<div class="w-full max-w-4xl mx-auto p-4">
+  <!-- Form with search box and examples -->
+  <form [formGroup]="searchForm" (ngSubmit)="submitSearch()" class="space-y-4">
+    <div class="mb-2">
+      <h2 class="text-lg font-medium text-gray-700">Search Examples:</h2>
+      <p class="text-sm text-gray-600">drone AND (package OR delivery) • title:climate AND author:smith</p>
+    </div>
+    
+    <div class="flex">
+      <div class="relative flex-grow">
+        <input 
+          type="text" 
+          formControlName="query"
+          placeholder="Enter your search query..."
+          class="w-full px-4 py-3 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+
+        <!-- Clear query button -->
+        <button 
+          *ngIf="searchForm.get('query')?.value"
+          (click)="clearSearch()"
+          type="button"
+          class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          aria-label="Clear search"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+            <line x1="4" y1="4" x2="12" y2="12" stroke="currentColor" stroke-width="2" />
+            <line x1="12" y1="4" x2="4" y2="12" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </button>
+      </div>
+      
+      <button 
+        type="submit"
+        (click)="submitSearch()"
+        class="bg-blue-600 text-white px-4 py-3 rounded-r-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      >
+        Search
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,62 @@
+<div *ngIf="totalPages > 1" class="flex items-center justify-center mt-6 space-x-1">
+  <!-- Previous button -->
+  <button 
+    (click)="previousPage()" 
+    [disabled]="currentPage === 1" 
+    [class.opacity-50]="currentPage === 1"
+    class="px-3 py-1 rounded border bg-white text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    <svg width="10" height="10">
+      <path d="M8,1 L2,5 L8,9" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+  </button>
+  
+  <!-- First page  -->
+  <button 
+    *ngIf="pages.length > 0 && pages[0] > 1"
+    (click)="changePage(1)" 
+    class="px-3 py-1 rounded border bg-white text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    1
+  </button>
+  
+  <!-- Ellipsis -->
+  <span *ngIf="pages.length > 0 && pages[0] > 2" class="px-3 py-1 text-gray-500">...</span>
+  
+  <!-- Page number buttons -->
+  <button 
+    *ngFor="let page of pages" 
+    (click)="changePage(page)" 
+    [class.bg-blue-600]="page === currentPage"
+    [class.text-white]="page === currentPage"
+    [class.bg-white]="page !== currentPage"
+    [class.text-gray-600]="page !== currentPage"
+    class="px-3 py-1 rounded border hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    {{ page }}
+  </button>
+  
+  <!-- Ellipsis -->
+  <span *ngIf="pages.length > 0 && pages[pages.length - 1] < totalPages - 1" class="px-3 py-1 text-gray-500">...</span>
+  
+  <!-- Last page button -->
+  <button 
+    *ngIf="pages.length > 0 && pages[pages.length - 1] < totalPages"
+    (click)="changePage(totalPages)" 
+    class="px-3 py-1 rounded border bg-white text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    {{ totalPages }}
+  </button>
+  
+  <!-- Next button -->
+  <button 
+    (click)="nextPage()" 
+    [disabled]="currentPage === totalPages" 
+    [class.opacity-50]="currentPage === totalPages"
+    class="px-3 py-1 rounded border bg-white text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    <svg width="10" height="10">
+      <path d="M2,1 L8,5 L2,9" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+  </button>
+</div>

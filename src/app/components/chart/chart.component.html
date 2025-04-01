@@ -1,0 +1,7 @@
+<div *ngIf="papers.length === 0" class="py-8 text-center text-gray-500">
+  Enter a search query to generate chart data
+</div>
+
+<div *ngIf="papers.length > 0" class="h-64">
+  <canvas id="yearChart"></canvas>
+</div>

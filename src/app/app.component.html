@@ -1,0 +1,88 @@
+<div class="min-h-screen bg-gray-100">
+  <!-- Header -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-gray-900">Mini-Cypris Research Papers</h1>
+      <p class="text-gray-600 mt-1">Search and explore academic research papers</p>
+    </div>
+  </header>
+  
+  <main class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+    <!-- Search -->
+    <div class="bg-gray-50 rounded-lg p-6 mb-6">
+      <app-search (search)="onSearch($event)" (clear)="onClearSearch()"></app-search>
+    </div>
+    
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="bg-red-100 text-red-800 p-4 rounded-md mb-4 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+      </svg>
+      <span>{{ errorMessage }}</span>
+    </div>
+    
+    <!-- Counter selector -->
+    <div *ngIf="totalHits > 0" class="flex justify-between items-center mb-4">
+      <div class="text-sm text-gray-600">
+        Showing {{ papers.length }} of {{ totalHits | number }} results (page {{ currentPage }})
+      </div>
+      <app-count-selector 
+        [selectedCount]="resultsPerPage"
+        (countChange)="onCountChange($event)">
+      </app-count-selector>
+    </div>
+    
+    <!-- Results view -->
+    <div *ngIf="papers.length > 0" class="flex flex-col md:flex-row md:space-x-6">
+      <!-- Chart col -->
+      <div class="w-full md:w-1/3 mb-6 md:mb-0">
+        <div class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Publications by Year</h3>
+          <app-chart [papers]="papers"></app-chart>
+        </div>
+      </div>
+      
+      <!-- Results column -->
+      <div class="w-full md:w-2/3">
+        <app-results [papers]="papers" [loading]="loading"></app-results>
+        
+        <!-- Pagination -->
+        <app-pagination 
+          [totalItems]="totalHits" 
+          [itemsPerPage]="resultsPerPage" 
+          [currentPage]="currentPage"
+          (pageChange)="onPageChange($event)"
+        ></app-pagination>
+      </div>
+    </div>
+    
+    <!-- Loading icon -->
+    <div *ngIf="loading" class="flex justify-center py-12">
+      <div class="w-12 h-12 border-4 border-blue-400 border-t-blue-600 rounded-full animate-spin"></div>
+    </div>
+    
+    <!-- Default view before a search has been done -->
+    <div *ngIf="!loading && papers.length === 0 && !currentQuery" class="text-center p-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <h3 class="text-lg font-medium text-gray-800 mb-2">Search for research papers</h3>
+      <p class="text-gray-600">Enter a search term above to explore academic papers</p>
+    </div>
+    
+    <!-- No results -->
+    <div *ngIf="!loading && papers.length === 0 && currentQuery && !errorMessage" class="text-center p-8">
+      <p class="text-lg text-gray-700">No results found for "{{ currentQuery }}"</p>
+      <p class="text-sm text-gray-500 mt-2">Try adjusting your search terms</p>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-white shadow-inner mt-8 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-gray-500 text-sm">
+        Mini-Cypris Research Papers Demo
+      </p>
+    </div>
+  </footer>
+</div>
