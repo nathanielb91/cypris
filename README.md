@@ -80,6 +80,4 @@ export const environment = {
 - Pagination support
 - Data visualization by publication year
 
-```
-
-```
+> **Note:** This repository was recreated on March 31, 2025 to clean up the commit history.
